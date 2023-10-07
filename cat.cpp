@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fcntl.h>
 #include <vector>
+#include <errno.h>
 #include <unistd.h>
 
 int main(int argc, char**argv)
@@ -14,16 +15,19 @@ int main(int argc, char**argv)
    int open_id = open(argv[1],O_RDONLY);
    if(open_id == -1)
    {
-	   std::cout << "unable to open file " << argv[1] << '\n';
+	   std::perror("open");
 	   exit(EXIT_FAILURE);
    }
    std::vector<char> buf(buffsize,0);
    int readBytes = read(open_id,buf.data(),buffsize);
+   int writecode = 0;
    while(0 != readBytes)
    {
-	for(std::size_t i = 0; i < readBytes;++i)
+	writecode = write(STDOUT_FILENO, buf.data(), readBytes);
+	if(writecode == -1)
 	{
-		std::cout << buf[i];
+	      std::perror("write");
+	      exit(EXIT_FAILURE);	
 	}
 	readBytes = read(open_id,buf.data(),buffsize);
    }
