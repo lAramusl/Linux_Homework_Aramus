@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fcntl.h>
 #include <vector>
+#include <cstdio>
 #include <unistd.h>
 
 int main(int argc, char**argv)
@@ -14,13 +15,13 @@ int main(int argc, char**argv)
    int open_id = open(argv[1],O_RDONLY);
    if(open_id == -1)
    {
-	   std::cout << "unable to open file " << argv[1] << '\n';
+	  std::perror("open");
 	   exit(EXIT_FAILURE);
    }
-   int write_id = open(argv[2],O_WRONLY|O_CREAT|O_TRUNC, S_IRWXO);
+   int write_id = open(argv[2],O_WRONLY|O_CREAT|O_TRUNC, 0666);
    if(write_id == -1)
    {
-	std::cout << "unable to open/create file" << argv[2] << '\n';
+	std::perror("write");
 	exit(EXIT_FAILURE);
    }
    std::vector<char> buff(buffsize,0);
@@ -31,10 +32,15 @@ int main(int argc, char**argv)
 	writeBytes = write(write_id,buff.data(),buffsize);
 	if(writeBytes == -1)
 	{
-		std::cout << "Error durring writing" << '\n';
+		std::perror("write");
 		exit(EXIT_FAILURE);
 	}
 	readBytes = read(open_id,buff.data(),buffsize);
+	if(readBytes == -1)
+	{
+		std::perror("read");
+		exit(EXIT_FAILURE);
+	}
    }
    close(open_id);
    close(write_id);
