@@ -2,6 +2,7 @@
 #include <fcntl.h>
 #include <vector>
 #include <errno.h>
+#include <cstdio>
 #include <unistd.h>
 
 int main(int argc, char**argv)
