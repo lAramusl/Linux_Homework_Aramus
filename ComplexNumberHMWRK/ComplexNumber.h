@@ -21,7 +21,7 @@ public:
 	friend ComplexNumber operator-(const ComplexNumber& num1, const ComplexNumber& num2);
 	friend ComplexNumber operator*(const ComplexNumber& num1, double k);
 
-	double abs(const ComplexNumber& num);
+	double abs()const;
 
 
 };

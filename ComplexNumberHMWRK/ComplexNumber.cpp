@@ -1,6 +1,7 @@
 #include "ComplexNumber.h"
 #include <iostream>
 #include <cmath>
+#include <algorithm>
 
 ComplexNumber::ComplexNumber(double re, double im)
 	: Re(re), Im(im) {}
@@ -41,8 +42,7 @@ ComplexNumber operator*(const ComplexNumber& num1, double k)
 	return ComplexNumber(k * num1.Re, k * num1.Im);
 }
 
-double ComplexNumber::abs(const ComplexNumber& num)
+double ComplexNumber::abs() const
 {
-	return std::sqrt((num.Re * num.Re) + (num.Im * num.Im));
+	return std::sqrt((Re * Re) + (Im * Im));
 }
-
