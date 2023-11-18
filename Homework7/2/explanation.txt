@@ -1,0 +1,9 @@
+case 1: parent is not waiting the child
+
+So, if the parent process isnt finished before child process, then the child
+successfully kills it, otherwise it becomes a oprhan process and so said the 
+INIT process becomes it's new parrent and child kills INIT.
+
+case 2: parent is waiting the child
+
+In this case child always successfully kills the parent
