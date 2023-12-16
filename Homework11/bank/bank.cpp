@@ -50,16 +50,18 @@ BankAccount bank(500);
 
 void* debit(void* args)
 {
-	long diff = *(static_cast<long*>(args));
-	bank.debit(diff);
-	return nullptr;
+  long diff = *(static_cast<long*>(args));
+  bank.debit(diff);
+  std::cout << "the amount after debit : " << bank.getbalance() << "\n";
+  return nullptr;
 }
 
 void* credit(void* args)
 {
-	long diff = *(static_cast<long*>(args));
-	bank.credit(diff);
-	return nullptr;
+  long diff = *(static_cast<long*>(args));
+  bank.credit(diff);
+  std::cout << "the amount after credit : " << bank.getbalance() << "\n";
+  return nullptr;
 }
 
 int main()
